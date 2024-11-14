@@ -1,13 +1,17 @@
 // import { createTheme } from "@mui/material/styles";
 import { useEffect, useState } from "react";
+import { TaskClass } from "./TaskClass";
 
 import {
+  Box,
   Button,
   Card,
   CardContent,
   createTheme,
   Grid2,
+  Paper,
   ThemeProvider,
+  Tooltip,
 } from "@mui/material";
 
 import "./App.css";
@@ -46,26 +50,112 @@ function Profile() {
   // 1 -> medium
   // 2 -> hard
 
+  // Task Creation/Setup
   const [createTask, setCreateTask] = useState(false);
+  const [taskName, setTaskName] = useState("");
   const [importance, setImportance] = useState("");
   const [urgency, setUrgency] = useState("");
   const [mode, setMode] = useState("");
 
+  // Task Management | Keeping track of the current tasks
+  // ^ This would be replaced by the db later on
+  const [workTasks, setWorkTasks] = useState<TaskClass[]>([]);
+  const [schoolTasks, setSchoolTasks] = useState<TaskClass[]>([]);
+  const [homeTasks, setHomeTasks] = useState<TaskClass[]>([]);
+
+  // Creates the created task and sorts it into its mode
+  function createAndSortTasks() {
+    const newTask = new TaskClass(
+      taskName,
+      importance,
+      urgency,
+      mode,
+      workTasks.length + 1
+    );
+    console.log("Inside the createAndSortTasks() function.");
+    console.log(newTask.taskName);
+    console.log(newTask.importance);
+    console.log(newTask.urgency);
+    console.log(newTask.mode);
+
+    // Put the task in one of the modes
+    // Run task in the matrix for the respective mode
+    if (mode == "work") {
+      const updatedWorkTasks: TaskClass[] = workTasks;
+      updatedWorkTasks.push(newTask);
+
+      setWorkTasks(updatedWorkTasks);
+      // runMatrix re-evaluates the tasks and sets the matrixOrder
+      // property in each task, as shown in TaskClass
+      runMatrix(updatedWorkTasks, "work");
+    } else if (mode == "school") {
+      const updatedSchoolTasks: TaskClass[] = schoolTasks;
+      updatedSchoolTasks.push(newTask);
+
+      setSchoolTasks(updatedSchoolTasks);
+
+      runMatrix(updatedSchoolTasks, "school");
+    } else if (mode == "home") {
+      const updatedHomeTasks: TaskClass[] = homeTasks;
+      updatedHomeTasks.push(newTask);
+
+      setHomeTasks(updatedHomeTasks);
+
+      runMatrix(updatedHomeTasks, "home");
+    } else {
+      console.log("Internal Client Error...");
+    }
+  }
+
+  function runMatrix(tasks: TaskClass[], mode: string) {
+    // Placeholder for the actual matrix implementation | Orders in reverse order
+    const tasksToUpdate: TaskClass[] = tasks;
+    tasksToUpdate.map((task) => {
+      task.setMatrixOrder(tasksToUpdate.length - task.insertedOrder + 1);
+    });
+    if (mode == "work") {
+      setWorkTasks(tasksToUpdate);
+    } else if (mode == "school") {
+      setSchoolTasks(tasksToUpdate);
+    } else if (mode == "home") {
+      setHomeTasks(tasksToUpdate);
+    } else {
+      console.log("Internal Client Error...");
+    }
+  }
+
   useEffect(() => {
-    if (importance && urgency && mode) {
-      // Put the task in one of the modes
-      // Run task in eisenhower matrix for the respective mode
-      // Add a tag to each task with the eisenhower matrix order
-      // Display to user
-      // ...
-    } // Else, do nothing.
-  }, [importance, urgency, mode]);
+    if (!createTask && taskName && importance && urgency && mode) {
+      console.log(taskName);
+      console.log(importance);
+      console.log(urgency);
+      console.log(mode);
+
+      createAndSortTasks();
+      setTaskName("");
+      setImportance("");
+      setUrgency("");
+      setMode("");
+    }
+    // if (taskName && importance && urgency && mode) {
+    //   console.log(taskName);
+    //   console.log(importance);
+    //   console.log(urgency);
+    //   console.log(mode);
+
+    //   createAndSortTasks();
+    //   // Display to user
+    //   // Add a tag to each task with the matrix order
+    //   // ...
+    // } // Else, do nothing.
+  }, [createTask, taskName, importance, urgency, mode]);
 
   return (
     <>
       {createTask ? (
         <Task
-          // submitTask={createTask}
+          taskName={taskName}
+          setTaskName={setTaskName}
           setSubmitTask={setCreateTask}
           importance={importance}
           setImportance={setImportance}
@@ -75,6 +165,10 @@ function Profile() {
           setMode={setMode}
         />
       ) : (
+        // () => {
+        // createAndSortTasks();
+
+        // return (
         <Card variant="outlined" style={{ backgroundColor: " #F5EBFF " }}>
           <CardContent>
             <h2>Your Points</h2>
@@ -88,9 +182,132 @@ function Profile() {
                   {/* <Streaks /> */}
                   <p>Streaks</p>
                 </Grid2>
-                <Grid2 size={4}>Work</Grid2>
-                <Grid2 size={4}>School</Grid2>
-                <Grid2 size={4}>Home</Grid2>
+                <Grid2 size={4}>
+                  <Card
+                    variant="outlined"
+                    style={{ backgroundColor: " #F5EBFF " }}
+                  >
+                    <CardContent>
+                      {createTask == false && workTasks.length > 0 ? (
+                        workTasks.map((task) => (
+                          <Box>
+                            <Paper
+                              elevation={3}
+                              sx={{
+                                borderRadius: 1,
+                                bgcolor: "primary.main",
+                                "&:hover": {
+                                  bgcolor: "primary.dark",
+                                },
+                              }}
+                            >
+                              {task.taskName} {task.importance} {task.urgency}{" "}
+                              {"Recommended Order:"} {task.matrixOrder}
+                            </Paper>
+                            <br />
+                          </Box>
+                        ))
+                      ) : (
+                        <Paper
+                          elevation={3}
+                          sx={{
+                            borderRadius: 1,
+                            bgcolor: "primary.main",
+                            "&:hover": {
+                              bgcolor: "primary.dark",
+                            },
+                          }}
+                        >
+                          {"No tasks..."}
+                        </Paper>
+                      )}
+                    </CardContent>
+                  </Card>
+                </Grid2>
+                <Grid2 size={4}>
+                  <Card
+                    variant="outlined"
+                    style={{ backgroundColor: " #F5EBFF " }}
+                  >
+                    <CardContent>
+                      {createTask == false && schoolTasks.length > 0 ? (
+                        schoolTasks.map((task) => (
+                          <Box>
+                            <Paper
+                              elevation={3}
+                              sx={{
+                                borderRadius: 1,
+                                bgcolor: "primary.main",
+                                "&:hover": {
+                                  bgcolor: "primary.dark",
+                                },
+                              }}
+                            >
+                              {task.taskName} {task.importance} {task.urgency}{" "}
+                              {"Recommended Order:"} {task.matrixOrder}
+                            </Paper>
+                            <br />
+                          </Box>
+                        ))
+                      ) : (
+                        <Paper
+                          elevation={3}
+                          sx={{
+                            borderRadius: 1,
+                            bgcolor: "primary.main",
+                            "&:hover": {
+                              bgcolor: "primary.dark",
+                            },
+                          }}
+                        >
+                          {"No tasks..."}
+                        </Paper>
+                      )}
+                    </CardContent>
+                  </Card>
+                </Grid2>
+                <Grid2 size={4}>
+                  <Card
+                    variant="outlined"
+                    style={{ backgroundColor: " #F5EBFF " }}
+                  >
+                    <CardContent>
+                      {createTask == false && homeTasks.length > 0 ? (
+                        homeTasks.map((task) => (
+                          <Box>
+                            <Paper
+                              elevation={3}
+                              sx={{
+                                borderRadius: 1,
+                                bgcolor: "primary.main",
+                                "&:hover": {
+                                  bgcolor: "primary.dark",
+                                },
+                              }}
+                            >
+                              {task.taskName} {task.importance} {task.urgency}{" "}
+                              {"Recommended Order:"} {task.matrixOrder}
+                            </Paper>
+                            <br />
+                          </Box>
+                        ))
+                      ) : (
+                        <Paper
+                          elevation={3}
+                          sx={{
+                            borderRadius: 1,
+                            bgcolor: "primary.main",
+                            "&:hover": {
+                              bgcolor: "primary.dark",
+                            },
+                          }}
+                        >
+                          {"No tasks..."}
+                        </Paper>
+                      )}
+                    </CardContent>
+                  </Card>
+                </Grid2>
                 <br />
                 <Grid2 size={12}>
                   <Button
@@ -105,6 +322,8 @@ function Profile() {
             </ThemeProvider>
           </CardContent>
         </Card>
+        // );
+        // }
       )}
     </>
   );

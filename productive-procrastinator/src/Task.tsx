@@ -21,6 +21,8 @@ interface TaskProp {
   // submitTask: boolean;
   setSubmitTask: React.Dispatch<React.SetStateAction<boolean>>;
 
+  taskName: string;
+  setTaskName: React.Dispatch<React.SetStateAction<string>>;
   importance: string;
   setImportance: React.Dispatch<React.SetStateAction<string>>;
   urgency: string;
@@ -33,6 +35,8 @@ interface TaskProp {
 function Task({
   // submitTask,
   setSubmitTask,
+  taskName,
+  setTaskName,
   importance,
   setImportance,
   urgency,
@@ -57,7 +61,7 @@ function Task({
   const handleTaskSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     // Handling task submission.
-    if (importance && urgency && mode) {
+    if (taskName && importance && urgency && mode) {
       setSelectError(false);
       setSubmitTask(false);
     } else {
@@ -82,13 +86,13 @@ function Task({
                       Task Name
                     </InputLabel>
                     <OutlinedInput
-                      // sx={{ input: { color: "#F5EBFF" } }}
+                      style={{ width: "300px" }}
                       id="component-outlined"
                       placeholder="Task Name"
                       label="Task Name"
                       type="string"
-                      // value={email}
-                      // onChange={(event) => setEmail(event.target.value)}
+                      value={taskName}
+                      onChange={(event) => setTaskName(event.target.value)}
                       required
                     ></OutlinedInput>
                     <FormHelperText>Enter the task's name</FormHelperText>
@@ -102,7 +106,7 @@ function Task({
                   <FormControl fullWidth>
                     <InputLabel>Importance</InputLabel>
                     <Select
-                      style={{ width: "200px" }}
+                      style={{ width: "300px" }}
                       value={importance}
                       label="Importance" // Might need to change this later
                       onChange={(event) => setImportance(event.target.value)}
@@ -120,7 +124,7 @@ function Task({
                   <FormControl fullWidth>
                     <InputLabel>Urgency</InputLabel>
                     <Select
-                      style={{ width: "200px" }}
+                      style={{ width: "300px" }}
                       value={urgency}
                       label="Urgency" // Might need to change this later
                       onChange={(event) => setUrgency(event.target.value)}
@@ -139,7 +143,7 @@ function Task({
                   <FormControl fullWidth>
                     <InputLabel>Mode</InputLabel>
                     <Select
-                      style={{ width: "200px" }}
+                      style={{ width: "300px" }}
                       value={mode}
                       label="Mode" // Might need to change this later
                       onChange={(event) => setMode(event.target.value)}
@@ -168,10 +172,10 @@ function Task({
                 variant="contained"
                 color="primary"
                 onClick={() => {
-                  setSubmitTask(false);
                   setImportance("");
                   setMode("");
                   setUrgency("");
+                  setSubmitTask(false);
                 }}
               >
                 Cancel
