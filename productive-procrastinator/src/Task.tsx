@@ -27,6 +27,8 @@ interface TaskProp {
   setImportance: React.Dispatch<React.SetStateAction<string>>;
   urgency: string;
   setUrgency: React.Dispatch<React.SetStateAction<string>>;
+  difficulty: string;
+  setDifficulty: React.Dispatch<React.SetStateAction<string>>;
 
   mode: string;
   setMode: React.Dispatch<React.SetStateAction<string>>;
@@ -41,6 +43,8 @@ function Task({
   setImportance,
   urgency,
   setUrgency,
+  difficulty,
+  setDifficulty,
   mode,
   setMode,
 }: TaskProp) {
@@ -61,7 +65,7 @@ function Task({
   const handleTaskSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     // Handling task submission.
-    if (taskName && importance && urgency && mode) {
+    if (taskName && importance && urgency && mode && difficulty && urgency) {
       setSelectError(false);
       setSubmitTask(false);
     } else {
@@ -97,7 +101,6 @@ function Task({
                     ></OutlinedInput>
                     <FormHelperText>Enter the task's name</FormHelperText>
                   </FormControl>
-                  {/* <br /> */}
                 </Grid2>
                 <Grid2 size={6}>
                   <h3>How important is it?</h3>
@@ -137,6 +140,26 @@ function Task({
                 </Grid2>
 
                 <Grid2 size={6}>
+                  <h3>How difficult is it?</h3>
+                </Grid2>
+                <Grid2 size={6}>
+                  <FormControl fullWidth>
+                    <InputLabel>Difficulty</InputLabel>
+                    <Select
+                      style={{ width: "300px" }}
+                      value={mode}
+                      label="Mode" // Might need to change this later
+                      onChange={(event) => setDifficulty(event.target.value)}
+                    >
+                      <MenuItem value={"easy"}>Easy</MenuItem>
+                      <MenuItem value={"medium"}>Medium</MenuItem>
+                      <MenuItem value={"hard"}>Hard</MenuItem>
+                    </Select>
+                    <FormHelperText>Enter the task's difficulty</FormHelperText>
+                  </FormControl>
+                </Grid2>
+
+                <Grid2 size={6}>
                   <h3>What mode is this for?</h3>
                 </Grid2>
                 <Grid2 size={6}>
@@ -172,9 +195,11 @@ function Task({
                 variant="contained"
                 color="primary"
                 onClick={() => {
+                  setTaskName("");
                   setImportance("");
-                  setMode("");
                   setUrgency("");
+                  setDifficulty("");
+                  setMode("");
                   setSubmitTask(false);
                 }}
               >
