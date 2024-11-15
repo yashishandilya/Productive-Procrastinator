@@ -50,13 +50,13 @@ function Profile() {
   // Note: Wouldn't 1 and 3 be additional points and 2 be the base points?
 
   // Updated and shown to the user
-  const [totalPoints, setTotalPoints] = useState(0);
+  // const [totalPoints, setTotalPoints] = useState(0);
 
   // Difficulty multiplier
 
   // Used for STREAK bonuses | They're applied only after the first task such that there is a series of tasks
-  const [prevDiff, setPrevDiff] = useState(0);
-  const [curDiff, setCurDiff] = useState(0);
+  // const [prevDiff, setPrevDiff] = useState(0);
+  // const [curDiff, setCurDiff] = useState(0);
 
   // 0 -> easy
   // 1 -> medium
@@ -384,6 +384,8 @@ function Profile() {
           importance={importance}
           setImportance={setImportance}
           urgency={urgency}
+          difficulty={difficulty}
+          setDifficulty={setDifficulty}
           setUrgency={setUrgency}
           mode={mode}
           setMode={setMode}
@@ -415,11 +417,11 @@ function Profile() {
               <Grid2 container spacing={2}>
                 <Grid2 size={6}>
                   {/* <Points points={totalPoints} setPoints={setTotalPoints} /> */}
-                  <p>Points</p>
+                  <p>Points {totalPoints}</p>
                 </Grid2>
                 <Grid2 size={6}>
                   {/* <Streaks /> */}
-                  <p>Streaks</p>
+                  <p>Streaks {streak}</p>
                 </Grid2>
                 <Grid2 size={4}>
                   <Card
@@ -452,6 +454,7 @@ function Profile() {
                                     control={<Checkbox />}
                                     label={task.taskName}
                                   /> */}
+                                {task.taskName}
                                 {task.importance} {task.urgency}{" "}
                                 {"Recommended Order:"} {task.matrixOrder}{" "}
                                 {task.difficulty}
@@ -506,15 +509,30 @@ function Profile() {
                                 },
                               }}
                             >
-                              <FormGroup>
-                                <FormControlLabel
-                                  control={<Checkbox />}
-                                  label={task.taskName}
-                                />
+                              <form
+                                onSubmit={(event) =>
+                                  handleTaskCompletion(task, event)
+                                }
+                              >
+                                {/* <FormGroup>
+                                  <FormControlLabel
+                                    control={<Checkbox />}
+                                    label={task.taskName}
+                                  /> */}
+                                {task.taskName}
                                 {task.importance} {task.urgency}{" "}
                                 {"Recommended Order:"} {task.matrixOrder}{" "}
                                 {task.difficulty}
-                              </FormGroup>
+                                {/* </FormGroup> */}
+                                <br />
+                                <Button
+                                  type="submit"
+                                  variant="contained"
+                                  color="primary"
+                                >
+                                  Mark Completed
+                                </Button>
+                              </form>
                             </Paper>
                             <br />
                           </Box>
@@ -556,15 +574,30 @@ function Profile() {
                                 },
                               }}
                             >
-                              <FormGroup>
-                                <FormControlLabel
-                                  control={<Checkbox />}
-                                  label={task.taskName}
-                                />
+                              <form
+                                onSubmit={(event) =>
+                                  handleTaskCompletion(task, event)
+                                }
+                              >
+                                {/* <FormGroup>
+                                  <FormControlLabel
+                                    control={<Checkbox />}
+                                    label={task.taskName}
+                                  /> */}
+                                {task.taskName}
                                 {task.importance} {task.urgency}{" "}
                                 {"Recommended Order:"} {task.matrixOrder}{" "}
                                 {task.difficulty}
-                              </FormGroup>
+                                {/* </FormGroup> */}
+                                <br />
+                                <Button
+                                  type="submit"
+                                  variant="contained"
+                                  color="primary"
+                                >
+                                  Mark Completed
+                                </Button>
+                              </form>
                             </Paper>
                             <br />
                           </Box>
