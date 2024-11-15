@@ -1,7 +1,8 @@
 // import { createTheme } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 import { TaskClass } from "./TaskClass";
-
+import { auth } from './firebase';
+import { signOut } from '@firebase/auth';
 import {
   Box,
   Button,
@@ -30,6 +31,15 @@ function Profile() {
       },
     },
   });
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      console.log("Successfully signed out");
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
 
   // 3 modes to follow for the point system
   // 1. Eisenhower Matrix | Gives points based on how the ai ordered your tasks.
@@ -150,29 +160,83 @@ function Profile() {
     // } // Else, do nothing.
   }, [createTask, taskName, importance, urgency, mode]);
 
-  return (
-    <>
-      {createTask ? (
-        <Task
-          taskName={taskName}
-          setTaskName={setTaskName}
-          setSubmitTask={setCreateTask}
-          importance={importance}
-          setImportance={setImportance}
-          urgency={urgency}
-          setUrgency={setUrgency}
-          mode={mode}
-          setMode={setMode}
-        />
-      ) : (
-        // () => {
-        // createAndSortTasks();
-
-        // return (
-        <Card variant="outlined" style={{ backgroundColor: " #F5EBFF " }}>
-          <CardContent>
+//   return (
+//     <>
+//       {createTask ? (
+//         <Task
+//           taskName={taskName}
+//           setTaskName={setTaskName}
+//           setSubmitTask={setCreateTask}
+//           importance={importance}
+//           setImportance={setImportance}
+//           urgency={urgency}
+//           setUrgency={setUrgency}
+//           mode={mode}
+//           setMode={setMode}
+//         />
+//       ) : (
+//         <Card variant="outlined" style={{ backgroundColor: " #F5EBFF " }}>
+//           <CardContent>
+//             <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+//               <h2>Your Points</h2>
+//               <Button
+//                 variant="contained"
+//                 onClick={handleSignOut}
+//                 sx={{ 
+//                   backgroundColor: "#FF5733",
+//                   '&:hover': {
+//                     backgroundColor: '#E64A2E'
+//                   }
+//                 }}
+//               >
+//                 Sign Out
+//               </Button>
+//             </Box>
+//             <ThemeProvider theme={theme}>
+//               {/* Rest of your existing Profile component JSX */}
+//               <Grid2 container spacing={2}>
+//                 {/* ... [Keep all your existing Grid2 components] */}
+//               </Grid2>
+//             </ThemeProvider>
+//           </CardContent>
+//         </Card>
+//       )}
+//     </>
+//   );
+// }
+return (
+  <>
+    {createTask ? (
+      <Task
+        taskName={taskName}
+        setTaskName={setTaskName}
+        setSubmitTask={setCreateTask}
+        importance={importance}
+        setImportance={setImportance}
+        urgency={urgency}
+        setUrgency={setUrgency}
+        mode={mode}
+        setMode={setMode}
+      />
+    ) : (
+      <Card variant="outlined" style={{ backgroundColor: " #F5EBFF " }}>
+        <CardContent>
+          <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
             <h2>Your Points</h2>
-            <ThemeProvider theme={theme}>
+            <Button
+              variant="contained"
+              onClick={handleSignOut}
+              sx={{ 
+                backgroundColor: "#FF5733",
+                '&:hover': {
+                  backgroundColor: '#E64A2E'
+                }
+              }}
+            >
+              Sign Out
+            </Button>
+          </Box>
+          <ThemeProvider theme={theme}>
               <Grid2 container spacing={2}>
                 <Grid2 size={6}>
                   {/* <Points points={totalPoints} setPoints={setTotalPoints} /> */}
@@ -322,8 +386,6 @@ function Profile() {
             </ThemeProvider>
           </CardContent>
         </Card>
-        // );
-        // }
       )}
     </>
   );
