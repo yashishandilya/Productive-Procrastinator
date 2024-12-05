@@ -20,6 +20,7 @@ import {
 import "./App.css";
 // import Points from "./Points";
 import Task from "./Task";
+import VideoStream from './streaming/VideoStream';
 
 function Profile() {
   const theme = createTheme({
@@ -977,6 +978,9 @@ function Profile() {
                   >
                     Create Task
                   </Button>
+                </Grid2>
+                <Grid2>
+                  <VideoStream />
                 </Grid2>
               </Grid2>
             </ThemeProvider>
