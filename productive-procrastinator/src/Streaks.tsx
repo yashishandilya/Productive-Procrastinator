@@ -1,7 +1,7 @@
-interface StreakSystemProps {}
+// interface StreakSystemProps {}
 
-function Streaks() {
-  return <></>;
-}
+// function Streaks() {
+//   return <></>;
+// }
 
-export default Streaks;
+// export default Streaks;
