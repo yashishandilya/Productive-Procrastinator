@@ -8,17 +8,17 @@ import {
   Button,
   Card,
   CardContent,
-  Checkbox,
+  // Checkbox,
   createTheme,
-  FormControlLabel,
-  FormGroup,
+  // FormControlLabel,
+  // FormGroup,
   Grid2,
   Paper,
   ThemeProvider,
 } from "@mui/material";
 
 import "./App.css";
-import Points from "./Points";
+// import Points from "./Points";
 import Task from "./Task";
 
 function Profile() {
@@ -83,88 +83,113 @@ function Profile() {
   // Note: Wouldn't 1 and 3 be additional points and 2 be the base points?
 
   const [totalPoints, setTotalPoints] = useState(0);
-  const [prevDiff, setPrevDiff] = useState("");
+  const [prevDiff, _setPrevDiff] = useState("");
   const [streak, setStreak] = useState(0);
-  const [curDiff, setCurDiff] = useState("");
+  // const [curDiff, setCurDiff] = useState("");
 
-  const handleTaskCompletion = (
-    task: TaskClass,
-    event: { preventDefault: () => void }
-  ) => {
-    event.preventDefault();
-    // console.log(task.taskName);
-    // console.log(task.importance);
-    // console.log(task.urgency);
-    // console.log(task.insertedOrder);
-    // console.log(task.matrixOrder);
-    // console.log(task.mode);
+  // const handleTaskCompletion = (
+  //   task: TaskClass,
+  //   event: { preventDefault: () => void }
+  // ) => {
+  //   event.preventDefault();
+  //   // console.log(task.taskName);
+  //   // console.log(task.importance);
+  //   // console.log(task.urgency);
+  //   // console.log(task.insertedOrder);
+  //   // console.log(task.matrixOrder);
+  //   // console.log(task.mode);
 
-    // 1. Assign the points
-    // 1a. Assign the base points wrt matrix quadrants
-    // Assign base points based on where the importance
-    // and urgency of the task on the matrix
-    // 1b. Assign points based on task streaks
-    // Keep track of the difficulty of the current task in
-    // relation to the matrix quadrants, then assign points
-    // based on that while keeping track of the 'streak' (when the user has already completed a previous task).
-    // 1c. Assign points based on difficulty multiplier points
-    // Assign points if the new task is even HARDER than the one
-    // recommended on the matrix
-    const basePoints = assignBasePoints(task);
-    const streakPoints = assignStreakPoints(task) * basePoints;
-    const diffMultPoints = assignDiffMultiPoints(task) * basePoints;
-    const curPoints = basePoints + streakPoints + diffMultPoints;
-    setTotalPoints(curPoints);
+  //   // 1. Assign the points
+  //   // 1a. Assign the base points wrt matrix quadrants
+  //   // Assign base points based on where the importance
+  //   // and urgency of the task on the matrix
+  //   // 1b. Assign points based on task streaks
+  //   // Keep track of the difficulty of the current task in
+  //   // relation to the matrix quadrants, then assign points
+  //   // based on that while keeping track of the 'streak' (when the user has already completed a previous task).
+  //   // 1c. Assign points based on difficulty multiplier points
+  //   // Assign points if the new task is even HARDER than the one
+  //   // recommended on the matrix
+  //   const basePoints = assignBasePoints(task);
+  //   const streakPoints = assignStreakPoints(task) * basePoints;
+  //   const diffMultPoints = assignDiffMultiPoints(task) * basePoints;
+  //   const curPoints = basePoints + streakPoints + diffMultPoints;
+  //   setTotalPoints(curPoints);
 
-    // 2. Remove THIS task from the list of tasks in correlation to the mode
-    // let updateTasks
-    if (mode == "work") {
-      const updateTasks: TaskClass[] = workTasks;
-      let i = 0;
-      for (i = 0; i < updateTasks.length; i++) {
-        if (task.insertedOrder == updateTasks[i].insertedOrder) {
-          break;
-        }
-      }
-      if (i > 0) {
-        updateTasks.splice(i, 1);
-      }
-      setWorkTasks(updateTasks);
-    } else if (mode == "school") {
-      const updateTasks: TaskClass[] = schoolTasks;
-      let i = 0;
-      for (i = 0; i < updateTasks.length; i++) {
-        if (task.insertedOrder == updateTasks[i].insertedOrder) {
-          break;
-        }
-      }
-      if (i > 0) {
-        updateTasks.splice(i, 1);
-      }
-      setSchoolTasks(updateTasks);
-    } else if (mode == "home") {
-      const updateTasks: TaskClass[] = homeTasks;
-      let i = 0;
-      for (i = 0; i < updateTasks.length; i++) {
-        if (task.insertedOrder == updateTasks[i].insertedOrder) {
-          break;
-        }
-      }
-      if (i > 0) {
-        updateTasks.splice(i, 1);
-      }
-      setHomeTasks(updateTasks);
-    } else {
-      console.log("Internal Client Error...");
-    }
+  //   // 2. Remove THIS task from the list of tasks in correlation to the mode
+  //   // let updateTasks
+  //   if (mode == "work") {
+  //     const updateTasks: TaskClass[] = workTasks;
+  //     let i = 0;
+  //     for (i = 0; i < updateTasks.length; i++) {
+  //       if (task.insertedOrder == updateTasks[i].insertedOrder) {
+  //         break;
+  //       }
+  //     }
+  //     if (i > 0) {
+  //       updateTasks.splice(i, 1);
+  //     }
+  //     setWorkTasks(updateTasks);
+  //   } else if (mode == "school") {
+  //     const updateTasks: TaskClass[] = schoolTasks;
+  //     let i = 0;
+  //     for (i = 0; i < updateTasks.length; i++) {
+  //       if (task.insertedOrder == updateTasks[i].insertedOrder) {
+  //         break;
+  //       }
+  //     }
+  //     if (i > 0) {
+  //       updateTasks.splice(i, 1);
+  //     }
+  //     setSchoolTasks(updateTasks);
+  //   } else if (mode == "home") {
+  //     const updateTasks: TaskClass[] = homeTasks;
+  //     let i = 0;
+  //     for (i = 0; i < updateTasks.length; i++) {
+  //       if (task.insertedOrder == updateTasks[i].insertedOrder) {
+  //         break;
+  //       }
+  //     }
+  //     if (i > 0) {
+  //       updateTasks.splice(i, 1);
+  //     }
+  //     setHomeTasks(updateTasks);
+  //   } else {
+  //     console.log("Internal Client Error...");
+  //   }
 
-    // 3. Update the list of tasks that are displayed ?????????
-  };
+  //   // 3. Update the list of tasks that are displayed ?????????
+  // };
 
   // // Assigns all points
   // function assignPoints(task: TaskClass) {
   //   console.log(task.taskName);
   // }
+  // In Profile.tsx, modify handleTaskCompletion:
+  const handleTaskCompletion = (task: TaskClass, event: React.FormEvent) => {
+    event.preventDefault();
+
+    // Calculate points
+    const basePoints = assignBasePoints(task);
+    const streakPoints = assignStreakPoints(task) * basePoints;
+    const diffMultPoints = assignDiffMultiPoints(task) * basePoints;
+    const earnedPoints = basePoints + streakPoints + diffMultPoints;
+    
+    // Update total points
+    setTotalPoints(prev => prev + earnedPoints);
+
+    // Remove the completed task
+    if (task.mode === "work") {
+      setWorkTasks(workTasks.filter(t => t.insertedOrder !== task.insertedOrder));
+    } else if (task.mode === "school") {
+      setSchoolTasks(schoolTasks.filter(t => t.insertedOrder !== task.insertedOrder));
+    } else if (task.mode === "home") {
+      setHomeTasks(homeTasks.filter(t => t.insertedOrder !== task.insertedOrder));
+    }
+
+    // Update the previous difficulty for streak calculation
+    _setPrevDiff(task.difficulty);
+  };
 
   // Assign the base points wrt matrix quadrants
   function assignBasePoints(task: TaskClass) {
@@ -293,6 +318,15 @@ function Profile() {
     }
   }
 
+  const handleDeleteTask = (task: TaskClass, mode: string) => {
+    if (mode === "work") {
+      setWorkTasks(workTasks.filter(t => t.insertedOrder !== task.insertedOrder));
+    } else if (mode === "school") {
+      setSchoolTasks(schoolTasks.filter(t => t.insertedOrder !== task.insertedOrder));
+    } else if (mode === "home") {
+      setHomeTasks(homeTasks.filter(t => t.insertedOrder !== task.insertedOrder));
+    }
+  };
   function runMatrix(tasks: TaskClass[], mode: string) {
     // Placeholder for the actual matrix implementation | Orders in reverse order
     const tasksToUpdate: TaskClass[] = tasks;
@@ -374,10 +408,282 @@ function Profile() {
   //     </>
   //   );
   // }
+  // return (
+  //   <>
+  //     {createTask ? (
+  //       <Task
+  //         id={taskName}
+  //         taskName={taskName}
+  //         setTaskName={setTaskName}
+  //         setSubmitTask={setCreateTask}
+  //         importance={importance}
+  //         setImportance={setImportance}
+  //         urgency={urgency}
+  //         difficulty={difficulty}
+  //         setDifficulty={setDifficulty}
+  //         setUrgency={setUrgency}
+  //         mode={mode}
+  //         setMode={setMode}
+  //       />
+  //     ) : (
+  //       <Card variant="outlined" style={{ backgroundColor: " #F5EBFF " }}>
+  //         <CardContent>
+  //           <Box
+  //             display="flex"
+  //             justifyContent="space-between"
+  //             alignItems="center"
+  //             mb={2}
+  //           >
+  //             <h2>Your Points</h2>
+  //             <Button
+  //               variant="contained"
+  //               onClick={handleSignOut}
+  //               sx={{
+  //                 backgroundColor: "#FF5733",
+  //                 "&:hover": {
+  //                   backgroundColor: "#E64A2E",
+  //                 },
+  //               }}
+  //             >
+  //               Sign Out
+  //             </Button>
+  //           </Box>
+  //           <ThemeProvider theme={theme}>
+  //             <Grid2 container spacing={2}>
+  //               <Grid2 size={6}>
+  //                 {/* <Points points={totalPoints} setPoints={setTotalPoints} /> */}
+  //                 <p>Points {totalPoints}</p>
+  //               </Grid2>
+  //               <Grid2 size={6}>
+  //                 {/* <Streaks /> */}
+  //                 <p>Streaks {streak}</p>
+  //               </Grid2>
+  //               <Grid2 size={4}>
+  //                 <Card
+  //                   variant="outlined"
+  //                   style={{ backgroundColor: " #F5EBFF " }}
+  //                 >
+  //                   {/* Note: Need to change card color to the site's background color and te text to the card's color. */}
+  //                   <CardContent>
+  //                     <h3>Work</h3>
+  //                     {createTask == false && workTasks.length > 0 ? (
+  //                       workTasks.map((task) => (
+  //                         <Box>
+  //                           <Paper
+  //                             elevation={3}
+  //                             sx={{
+  //                               borderRadius: 1,
+  //                               bgcolor: "primary.main",
+  //                               "&:hover": {
+  //                                 bgcolor: "primary.dark",
+  //                               },
+  //                             }}
+  //                           >
+  //                             <form
+  //                               onSubmit={(event) =>
+  //                                 handleTaskCompletion(task, event)
+  //                               }
+  //                             >
+  //                               {/* <FormGroup>
+  //                                 <FormControlLabel
+  //                                   control={<Checkbox />}
+  //                                   label={task.taskName}
+  //                                 /> */}
+  //                               {task.taskName}
+  //                               {task.importance} {task.urgency}{" "}
+  //                               {"Recommended Order:"} {task.matrixOrder}{" "}
+  //                               {task.difficulty}
+  //                               {/* </FormGroup> */}
+  //                               <br />
+  //                               <Button
+  //                                 type="submit"
+  //                                 variant="contained"
+  //                                 color="primary"
+  //                               >
+  //                                 Mark Completed
+  //                               </Button>
+  //                             </form>
+  //                           </Paper>
+  //                           <br />
+  //                         </Box>
+  //                       ))
+  //                     ) : (
+  //                       <Paper
+  //                         elevation={3}
+  //                         sx={{
+  //                           borderRadius: 1,
+  //                           bgcolor: "primary.main",
+  //                           "&:hover": {
+  //                             bgcolor: "primary.dark",
+  //                           },
+  //                         }}
+  //                       >
+  //                         {"No tasks..."}
+  //                       </Paper>
+  //                     )}
+  //                   </CardContent>
+  //                 </Card>
+  //               </Grid2>
+  //               <Grid2 size={4}>
+  //                 <Card
+  //                   variant="outlined"
+  //                   style={{ backgroundColor: " #F5EBFF " }}
+  //                 >
+  //                   <CardContent>
+  //                     <h3>School</h3>
+  //                     {createTask == false && schoolTasks.length > 0 ? (
+  //                       schoolTasks.map((task) => (
+  //                         <Box>
+  //                           <Paper
+  //                             elevation={3}
+  //                             sx={{
+  //                               borderRadius: 1,
+  //                               bgcolor: "primary.main",
+  //                               "&:hover": {
+  //                                 bgcolor: "primary.dark",
+  //                               },
+  //                             }}
+  //                           >
+  //                             <form
+  //                               onSubmit={(event) =>
+  //                                 handleTaskCompletion(task, event)
+  //                               }
+  //                             >
+  //                               {/* <FormGroup>
+  //                                 <FormControlLabel
+  //                                   control={<Checkbox />}
+  //                                   label={task.taskName}
+  //                                 /> */}
+  //                               {task.taskName}
+  //                               {task.importance} {task.urgency}{" "}
+  //                               {"Recommended Order:"} {task.matrixOrder}{" "}
+  //                               {task.difficulty}
+  //                               {/* </FormGroup> */}
+  //                               <br />
+  //                               <Button
+  //                                 type="submit"
+  //                                 variant="contained"
+  //                                 color="primary"
+  //                               >
+  //                                 Mark Completed
+  //                               </Button>
+  //                             </form>
+  //                           </Paper>
+  //                           <br />
+  //                         </Box>
+  //                       ))
+  //                     ) : (
+  //                       <Paper
+  //                         elevation={3}
+  //                         sx={{
+  //                           borderRadius: 1,
+  //                           bgcolor: "primary.main",
+  //                           "&:hover": {
+  //                             bgcolor: "primary.dark",
+  //                           },
+  //                         }}
+  //                       >
+  //                         {"No tasks..."}
+  //                       </Paper>
+  //                     )}
+  //                   </CardContent>
+  //                 </Card>
+  //               </Grid2>
+  //               <Grid2 size={4}>
+  //                 <Card
+  //                   variant="outlined"
+  //                   style={{ backgroundColor: " #F5EBFF " }}
+  //                 >
+  //                   <CardContent>
+  //                     <h3>Home</h3>
+  //                     {createTask == false && homeTasks.length > 0 ? (
+  //                       homeTasks.map((task) => (
+  //                         <Box>
+  //                           <Paper
+  //                             elevation={3}
+  //                             sx={{
+  //                               borderRadius: 1,
+  //                               bgcolor: "primary.main",
+  //                               "&:hover": {
+  //                                 bgcolor: "primary.dark",
+  //                               },
+  //                             }}
+  //                           >
+  //                             <form
+  //                               onSubmit={(event) =>
+  //                                 handleTaskCompletion(task, event)
+  //                               }
+  //                             >
+  //                               {/* <FormGroup>
+  //                                 <FormControlLabel
+  //                                   control={<Checkbox />}
+  //                                   label={task.taskName}
+  //                                 /> */}
+  //                               {task.taskName}
+  //                               {task.importance} {task.urgency}{" "}
+  //                               {"Recommended Order:"} {task.matrixOrder}{" "}
+  //                               {task.difficulty}
+  //                               {/* </FormGroup> */}
+  //                               <br />
+  //                               <Button
+  //                                 type="submit"
+  //                                 variant="contained"
+  //                                 color="primary"
+  //                               >
+  //                                 Mark Completed
+  //                               </Button>
+  //                             </form>
+  //                           </Paper>
+  //                           <br />
+  //                         </Box>
+  //                       ))
+  //                     ) : (
+  //                       <Paper
+  //                         elevation={3}
+  //                         sx={{
+  //                           borderRadius: 1,
+  //                           bgcolor: "primary.main",
+  //                           "&:hover": {
+  //                             bgcolor: "primary.dark",
+  //                           },
+  //                         }}
+  //                       >
+  //                         {"No tasks..."}
+  //                       </Paper>
+  //                     )}
+  //                   </CardContent>
+  //                 </Card>
+  //               </Grid2>
+  //               <br />
+  //               <Grid2 size={12}>
+  //               <Button
+  //                 variant="contained"
+  //                 sx={{ backgroundColor: "#FF5733" }}
+  //                 onClick={() => {
+  //                   setCreateTask(true);
+  //                   // Reset all form fields when opening the create task form
+  //                   setTaskName("");
+  //                   setImportance("");
+  //                   setUrgency("");
+  //                   setDifficulty("");
+  //                   setMode("");
+  //                 }}
+  //               >
+  //                 Create Task
+  //               </Button>
+  //               </Grid2>
+  //             </Grid2>
+  //           </ThemeProvider>
+  //         </CardContent>
+  //       </Card>
+  //     )}
+  //   </>
+  // );
   return (
     <>
       {createTask ? (
         <Task
+          id={taskName}
           taskName={taskName}
           setTaskName={setTaskName}
           setSubmitTask={setCreateTask}
@@ -416,24 +722,20 @@ function Profile() {
             <ThemeProvider theme={theme}>
               <Grid2 container spacing={2}>
                 <Grid2 size={6}>
-                  {/* <Points points={totalPoints} setPoints={setTotalPoints} /> */}
                   <p>Points {totalPoints}</p>
                 </Grid2>
                 <Grid2 size={6}>
-                  {/* <Streaks /> */}
                   <p>Streaks {streak}</p>
                 </Grid2>
+                
+                {/* Work Tasks Section */}
                 <Grid2 size={4}>
-                  <Card
-                    variant="outlined"
-                    style={{ backgroundColor: " #F5EBFF " }}
-                  >
-                    {/* Note: Need to change card color to the site's background color and te text to the card's color. */}
+                  <Card variant="outlined" style={{ backgroundColor: " #F5EBFF " }}>
                     <CardContent>
                       <h3>Work</h3>
-                      {createTask == false && workTasks.length > 0 ? (
+                      {workTasks.length > 0 ? (
                         workTasks.map((task) => (
-                          <Box>
+                          <Box key={task.insertedOrder} sx={{ mb: 2 }}>
                             <Paper
                               elevation={3}
                               sx={{
@@ -442,34 +744,47 @@ function Profile() {
                                 "&:hover": {
                                   bgcolor: "primary.dark",
                                 },
+                                p: 2
                               }}
                             >
-                              <form
-                                onSubmit={(event) =>
-                                  handleTaskCompletion(task, event)
-                                }
-                              >
-                                {/* <FormGroup>
-                                  <FormControlLabel
-                                    control={<Checkbox />}
-                                    label={task.taskName}
-                                  /> */}
-                                {task.taskName}
-                                {task.importance} {task.urgency}{" "}
-                                {"Recommended Order:"} {task.matrixOrder}{" "}
-                                {task.difficulty}
-                                {/* </FormGroup> */}
-                                <br />
-                                <Button
-                                  type="submit"
-                                  variant="contained"
-                                  color="primary"
-                                >
-                                  Mark Completed
-                                </Button>
-                              </form>
+                              <div style={{ 
+                                display: 'flex', 
+                                flexDirection: 'column',
+                                gap: '8px'
+                              }}>
+                                <div>
+                                  <strong>{task.taskName}</strong>
+                                  <br />
+                                  Status: {task.importance}, {task.urgency}
+                                  <br />
+                                  Difficulty: {task.difficulty}
+                                  <br />
+                                  Recommended Order: {task.matrixOrder}
+                                </div>
+                                <div style={{ 
+                                  display: 'flex', 
+                                  gap: '8px',
+                                  justifyContent: 'flex-end'
+                                }}>
+                                  <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={(event) => handleTaskCompletion(task, event)}
+                                    sx={{ minWidth: '120px' }}
+                                  >
+                                    Complete
+                                  </Button>
+                                  <Button
+                                    variant="outlined"
+                                    color="error"
+                                    onClick={() => handleDeleteTask(task, "work")}
+                                    sx={{ minWidth: '120px' }}
+                                  >
+                                    Delete
+                                  </Button>
+                                </div>
+                              </div>
                             </Paper>
-                            <br />
                           </Box>
                         ))
                       ) : (
@@ -478,27 +793,25 @@ function Profile() {
                           sx={{
                             borderRadius: 1,
                             bgcolor: "primary.main",
-                            "&:hover": {
-                              bgcolor: "primary.dark",
-                            },
+                            p: 2,
+                            textAlign: 'center'
                           }}
                         >
-                          {"No tasks..."}
+                          No tasks...
                         </Paper>
                       )}
                     </CardContent>
                   </Card>
                 </Grid2>
+
+                {/* School Tasks Section */}
                 <Grid2 size={4}>
-                  <Card
-                    variant="outlined"
-                    style={{ backgroundColor: " #F5EBFF " }}
-                  >
+                  <Card variant="outlined" style={{ backgroundColor: " #F5EBFF " }}>
                     <CardContent>
                       <h3>School</h3>
-                      {createTask == false && schoolTasks.length > 0 ? (
+                      {schoolTasks.length > 0 ? (
                         schoolTasks.map((task) => (
-                          <Box>
+                          <Box key={task.insertedOrder} sx={{ mb: 2 }}>
                             <Paper
                               elevation={3}
                               sx={{
@@ -507,34 +820,47 @@ function Profile() {
                                 "&:hover": {
                                   bgcolor: "primary.dark",
                                 },
+                                p: 2
                               }}
                             >
-                              <form
-                                onSubmit={(event) =>
-                                  handleTaskCompletion(task, event)
-                                }
-                              >
-                                {/* <FormGroup>
-                                  <FormControlLabel
-                                    control={<Checkbox />}
-                                    label={task.taskName}
-                                  /> */}
-                                {task.taskName}
-                                {task.importance} {task.urgency}{" "}
-                                {"Recommended Order:"} {task.matrixOrder}{" "}
-                                {task.difficulty}
-                                {/* </FormGroup> */}
-                                <br />
-                                <Button
-                                  type="submit"
-                                  variant="contained"
-                                  color="primary"
-                                >
-                                  Mark Completed
-                                </Button>
-                              </form>
+                              <div style={{ 
+                                display: 'flex', 
+                                flexDirection: 'column',
+                                gap: '8px'
+                              }}>
+                                <div>
+                                  <strong>{task.taskName}</strong>
+                                  <br />
+                                  Status: {task.importance}, {task.urgency}
+                                  <br />
+                                  Difficulty: {task.difficulty}
+                                  <br />
+                                  Recommended Order: {task.matrixOrder}
+                                </div>
+                                <div style={{ 
+                                  display: 'flex', 
+                                  gap: '8px',
+                                  justifyContent: 'flex-end'
+                                }}>
+                                  <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={(event) => handleTaskCompletion(task, event)}
+                                    sx={{ minWidth: '120px' }}
+                                  >
+                                    Complete
+                                  </Button>
+                                  <Button
+                                    variant="outlined"
+                                    color="error"
+                                    onClick={() => handleDeleteTask(task, "school")}
+                                    sx={{ minWidth: '120px' }}
+                                  >
+                                    Delete
+                                  </Button>
+                                </div>
+                              </div>
                             </Paper>
-                            <br />
                           </Box>
                         ))
                       ) : (
@@ -543,27 +869,25 @@ function Profile() {
                           sx={{
                             borderRadius: 1,
                             bgcolor: "primary.main",
-                            "&:hover": {
-                              bgcolor: "primary.dark",
-                            },
+                            p: 2,
+                            textAlign: 'center'
                           }}
                         >
-                          {"No tasks..."}
+                          No tasks...
                         </Paper>
                       )}
                     </CardContent>
                   </Card>
                 </Grid2>
+
+                {/* Home Tasks Section */}
                 <Grid2 size={4}>
-                  <Card
-                    variant="outlined"
-                    style={{ backgroundColor: " #F5EBFF " }}
-                  >
+                  <Card variant="outlined" style={{ backgroundColor: " #F5EBFF " }}>
                     <CardContent>
                       <h3>Home</h3>
-                      {createTask == false && homeTasks.length > 0 ? (
+                      {homeTasks.length > 0 ? (
                         homeTasks.map((task) => (
-                          <Box>
+                          <Box key={task.insertedOrder} sx={{ mb: 2 }}>
                             <Paper
                               elevation={3}
                               sx={{
@@ -572,34 +896,47 @@ function Profile() {
                                 "&:hover": {
                                   bgcolor: "primary.dark",
                                 },
+                                p: 2
                               }}
                             >
-                              <form
-                                onSubmit={(event) =>
-                                  handleTaskCompletion(task, event)
-                                }
-                              >
-                                {/* <FormGroup>
-                                  <FormControlLabel
-                                    control={<Checkbox />}
-                                    label={task.taskName}
-                                  /> */}
-                                {task.taskName}
-                                {task.importance} {task.urgency}{" "}
-                                {"Recommended Order:"} {task.matrixOrder}{" "}
-                                {task.difficulty}
-                                {/* </FormGroup> */}
-                                <br />
-                                <Button
-                                  type="submit"
-                                  variant="contained"
-                                  color="primary"
-                                >
-                                  Mark Completed
-                                </Button>
-                              </form>
+                              <div style={{ 
+                                display: 'flex', 
+                                flexDirection: 'column',
+                                gap: '8px'
+                              }}>
+                                <div>
+                                  <strong>{task.taskName}</strong>
+                                  <br />
+                                  Status: {task.importance}, {task.urgency}
+                                  <br />
+                                  Difficulty: {task.difficulty}
+                                  <br />
+                                  Recommended Order: {task.matrixOrder}
+                                </div>
+                                <div style={{ 
+                                  display: 'flex', 
+                                  gap: '8px',
+                                  justifyContent: 'flex-end'
+                                }}>
+                                  <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={(event) => handleTaskCompletion(task, event)}
+                                    sx={{ minWidth: '120px' }}
+                                  >
+                                    Complete
+                                  </Button>
+                                  <Button
+                                    variant="outlined"
+                                    color="error"
+                                    onClick={() => handleDeleteTask(task, "home")}
+                                    sx={{ minWidth: '120px' }}
+                                  >
+                                    Delete
+                                  </Button>
+                                </div>
+                              </div>
                             </Paper>
-                            <br />
                           </Box>
                         ))
                       ) : (
@@ -608,23 +945,35 @@ function Profile() {
                           sx={{
                             borderRadius: 1,
                             bgcolor: "primary.main",
-                            "&:hover": {
-                              bgcolor: "primary.dark",
-                            },
+                            p: 2,
+                            textAlign: 'center'
                           }}
                         >
-                          {"No tasks..."}
+                          No tasks...
                         </Paper>
                       )}
                     </CardContent>
                   </Card>
                 </Grid2>
-                <br />
+
+                {/* Create Task Button */}
                 <Grid2 size={12}>
                   <Button
                     variant="contained"
-                    sx={{ backgroundColor: "#FF5733" }}
-                    onClick={() => setCreateTask(true)}
+                    sx={{ 
+                      backgroundColor: "#FF5733",
+                      "&:hover": {
+                        backgroundColor: "#E64A2E",
+                      },
+                    }}
+                    onClick={() => {
+                      setCreateTask(true);
+                      setTaskName("");
+                      setImportance("");
+                      setUrgency("");
+                      setDifficulty("");
+                      setMode("");
+                    }}
                   >
                     Create Task
                   </Button>
