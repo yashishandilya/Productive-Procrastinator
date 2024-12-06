@@ -37,33 +37,6 @@ const ImageUploadButton: React.FC<ImageUploadButtonProps> = ({ taskId, onImageUp
     }
   };
 
-  const uploadToStorage = async (blob: Blob): Promise<string> => {
-    const fileName = `task_${taskId}_${Date.now()}.jpg`;
-    const storageRef = ref(storage, `taskImages/${fileName}`);
-    
-    const uploadTask = uploadBytesResumable(storageRef, blob);
-
-    return new Promise((resolve, reject) => {
-      uploadTask.on('state_changed',
-        (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setUploadProgress(progress);
-        },
-        (error) => {
-          console.error('Upload error:', error);
-          reject(error);
-        },
-        async () => {
-          try {
-            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-            resolve(downloadURL);
-          } catch (error) {
-            reject(error);
-          }
-        }
-      );
-    });
-  };
 
   const captureImage = async () => {
     if (!videoRef.current) {
@@ -200,15 +173,6 @@ const ImageUploadButton: React.FC<ImageUploadButtonProps> = ({ taskId, onImageUp
   // };
 
 
-  const testUpload = async (blob: Blob) => {
-    try {
-      console.log('Testing upload...');
-      // const url = await testStorageUpload(blob);
-      // console.log('Test successful:', url);
-    } catch (error) {
-      console.error('Test failed:', error);
-    }
-  };
 
   return (
     <>

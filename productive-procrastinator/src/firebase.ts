@@ -6,7 +6,7 @@ import {
   signOut,
   UserCredential
 } from '@firebase/auth';
-import { FirebaseStorage, getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
 console.log('Firebase imports loaded');
 
@@ -31,15 +31,15 @@ interface AuthResponse {
   error: Error | null;
 }
 
-console.log('Checking Firestore initialization...');
-try {
-  const testDoc = await addDoc(collection(db, 'test'), {
-    test: 'test'
-  });
-  console.log('Firestore is working, test document created:', testDoc.id);
-} catch (error) {
-  console.error('Firestore initialization error:', error);
-}
+// console.log('Checking Firestore initialization...');
+// try {
+//   const testDoc = await addDoc(collection(db, 'test'), {
+//     test: 'test'
+//   });
+//   console.log('Firestore is working, test document created:', testDoc.id);
+// } catch (error) {
+//   console.error('Firestore initialization error:', error);
+// }
 
 // Function to create a profile
 export const createProfile = async (username: string) => {
@@ -63,22 +63,7 @@ export const createProfile = async (username: string) => {
   }
 };
 
-const handleCreateTask = async () => {
-  console.log('Starting to create task...'); // Add this
-  try {
-    const taskData = {
-      name: 'Test Task',
-      importance: 'high',
-      urgency: 'medium',
-      difficulty: 'low'
-    };
-    console.log('Task data:', taskData);
-    const result = await createTask(taskData);
-    console.log('Task creation result:', result);
-  } catch (error) {
-    console.error('Failed to create task:', error);
-  }
-};
+// Removed the unused handleCreateTask function
 // Authentication functions
 export const loginWithEmail = async (
   email: string, 
