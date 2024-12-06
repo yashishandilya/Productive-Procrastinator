@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/imageuploadbutton.tsx","./src/login.tsx","./src/points.tsx","./src/profile.tsx","./src/streaks.tsx","./src/task.tsx","./src/taskclass.tsx","./src/firebase.ts","./src/main.tsx","./src/vite-env.d.ts","./src/streaming/videocall.tsx","./src/streaming/videostream.tsx","./src/streaming/config.ts","./src/utils/database.ts"],"version":"5.6.3"}
